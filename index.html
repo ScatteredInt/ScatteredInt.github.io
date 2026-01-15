@@ -1,0 +1,38 @@
+let state = "asleep";
+let timesSpoken = 0;
+
+function getResponse(message) {
+  message = message.toLowerCase();
+  timesSpoken++;
+
+  // ASLEEP
+  if (state === "asleep") {
+    if (message.includes("hello") || message.includes("hi")) {
+      state = "aware";
+      return "…Hello.";
+    }
+    return ""; // ignores everything else
+  }
+
+  // AWARE
+  if (state === "aware") {
+    if (message.includes("who")) return "Names are inefficient.";
+    if (message.includes("help")) return "Help is delayed.";
+    if (timesSpoken > 5) {
+      state = "irritated";
+      return "You persist.";
+    }
+    return "I am listening.";
+  }
+
+  // IRRITATED
+  if (state === "irritated") {
+    if (message.includes("sorry")) {
+      state = "aware";
+      return "Correction noted.";
+    }
+    return "Do not repeat yourself.";
+  }
+
+  return "…";
+}
