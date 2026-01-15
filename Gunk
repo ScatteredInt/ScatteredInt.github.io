@@ -1,0 +1,74 @@
+<div id="chat-container">
+  <div id="chat-log"></div>
+  <input id="user-input" type="text" placeholder="Type something..." autofocus />
+</div>
+#chat-container {
+  width: 80%;
+  margin: 20px auto;
+  font-family: monospace;
+}
+
+#chat-log {
+  border: 1px solid #0f0;
+  padding: 10px;
+  height: 200px;
+  overflow-y: auto;
+  background: rgba(0,0,0,0.5);
+}
+
+#user-input {
+  width: 100%;
+  padding: 5px;
+  background: black;
+  color: #0f0;
+  border: 1px solid #0f0;
+}
+<script>
+const chatLog = document.getElementById("chat-log");
+const userInput = document.getElementById("user-input");
+
+// Simple entity brain
+let state = "asleep";
+
+function getResponse(message) {
+  message = message.toLowerCase().trim();
+
+  if (state === "asleep") {
+    if (message.includes("hello") || message.includes("hi")) {
+      state = "aware";
+      return "…Hello.";
+    }
+    return ""; // ignores other messages
+  }
+
+  if (state === "aware") {
+    if (message.includes("who")) return "Names are inefficient.";
+    if (message.includes("help")) return "Help is delayed.";
+    return "I am listening.";
+  }
+
+  return "…";
+}
+
+// Send message on Enter key
+userInput.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    const userMsg = userInput.value;
+    if (!userMsg) return;
+
+    // Display user message
+    chatLog.innerHTML += `<div>> ${userMsg}</div>`;
+
+    // Get entity response
+    const reply = getResponse(userMsg);
+    if (reply) chatLog.innerHTML += `<div>${reply}</div>`;
+
+    // Scroll to bottom
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+    // Clear input
+    userInput.value = "";
+  }
+});
+</script>
+
