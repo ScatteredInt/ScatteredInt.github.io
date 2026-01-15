@@ -1,0 +1,10 @@
+---
+---
+@import "{{ site.theme }}";
+
+body {
+  background-image: url('URL_OF_YOUR_IMAGE');
+  background-size: cover; /* or other values like 100% or contain */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* optional, for a fixed background */
+}
